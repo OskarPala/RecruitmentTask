@@ -12,12 +12,6 @@ import java.util.stream.Collectors;
 class RepositoryRetriever {
     private final GitHubApiProxy gitHubApiProxy;
 
-    List<GitHubRepositoryDto> getFilteredRepositories(String username) {
-        return makeGetRepositoryRequest(username).stream()
-                .filter(gitHubRepositoryDto -> !gitHubRepositoryDto.fork())
-                .collect(Collectors.toList()
-                );
-    }
 
     List<GitHubRepositoryDto> makeGetRepositoryRequest(String username) {
         return gitHubApiProxy.getAllRepos(username);
