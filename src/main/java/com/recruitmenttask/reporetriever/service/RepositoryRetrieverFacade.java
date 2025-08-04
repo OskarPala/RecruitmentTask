@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class RepositoryRetrieverFacade {
-    private final RepositoryRetriever repositoryRetriever;
+    private final RepositoryRetriever repositoryRetrieverImpl;
 
     public List<AllInfoResult> getAllInfoResult(String userName) {
         List<GitHubRepository> results = getMappedRepositories(userName);
@@ -36,7 +36,7 @@ public class RepositoryRetrieverFacade {
     }
 
     List<BranchDto> getAllBranchesDto(GitHubRepository repository) {
-        return repositoryRetriever.makeBranchesRequest(
+        return repositoryRetrieverImpl.makeBranchesRequest(
                 repository.owner(),
                 repository.name()
         );
@@ -48,13 +48,13 @@ public class RepositoryRetrieverFacade {
     }
 
     List<GitHubRepositoryDto> getFilteredRepositories(String username) {
-        return repositoryRetriever.makeGetRepositoryRequest(username).stream()
+        return repositoryRetrieverImpl.makeGetRepositoryRequest(username).stream()
                 .filter(gitHubRepositoryDto -> !gitHubRepositoryDto.fork())
                 .collect(Collectors.toList()
                 );
     }
 
-    RepositoryRetrieverFacade(final RepositoryRetriever repositoryRetriever) {
-        this.repositoryRetriever = repositoryRetriever;
+    RepositoryRetrieverFacade(final RepositoryRetriever repositoryRetrieverImpl) {
+        this.repositoryRetrieverImpl = repositoryRetrieverImpl;
     }
 }
