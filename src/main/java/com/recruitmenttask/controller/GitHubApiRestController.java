@@ -1,8 +1,8 @@
 package com.recruitmenttask.controller;
 
 import com.recruitmenttask.controller.dto.AllRepositoriesResponseDto;
-import com.recruitmenttask.reporetriever.model.AllInfoResult;
-import com.recruitmenttask.reporetriever.service.RepositoryRetrieverFacade;
+import com.recruitmenttask.repositoryprovider.model.AllInfoResult;
+import com.recruitmenttask.repositoryprovider.service.RepositoryServiceFacade;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,19 +14,19 @@ import static com.recruitmenttask.controller.GitHubRepositoryMapper.mapFromAllIn
 
 @RestController
 public class GitHubApiRestController {
-    private final RepositoryRetrieverFacade repositoryRetrieverFacade;
+    private final RepositoryServiceFacade repositoryServiceFacade;
 
     @GetMapping("/{userName}")
     public ResponseEntity<AllRepositoriesResponseDto> getAllUserRepositories(
             @PathVariable String userName
     ) {
-        final List<AllInfoResult> results = repositoryRetrieverFacade.getAllInfoResult(userName);
+        final List<AllInfoResult> results = repositoryServiceFacade.getAllInfoResult(userName);
         final AllRepositoriesResponseDto responseDto = mapFromAllInfoResultToAllRepositoriesResponseDto(results);
         return ResponseEntity.ok(responseDto);
     }
 
 
-    GitHubApiRestController(final RepositoryRetrieverFacade repositoryRetrieverFacade) {
-        this.repositoryRetrieverFacade = repositoryRetrieverFacade;
+    GitHubApiRestController(final RepositoryServiceFacade repositoryServiceFacade) {
+        this.repositoryServiceFacade = repositoryServiceFacade;
     }
 }
