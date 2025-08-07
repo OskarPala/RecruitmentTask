@@ -1,7 +1,7 @@
-package com.recruitmenttask.reporetriever.proxy;
+package com.recruitmenttask.repositoryprovider.proxy;
 
-import com.recruitmenttask.reporetriever.proxy.dto.BranchDto;
-import com.recruitmenttask.reporetriever.proxy.dto.GitHubRepositoryDto;
+import com.recruitmenttask.repositoryprovider.proxy.dto.BranchDto;
+import com.recruitmenttask.repositoryprovider.proxy.dto.GitHubRepositoryDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,9 +1,9 @@
-package com.recruitmenttask.reporetriever.service;
+package com.recruitmenttask.repositoryprovider.service;
 
-import com.recruitmenttask.reporetriever.model.Branch;
-import com.recruitmenttask.reporetriever.model.GitHubRepository;
-import com.recruitmenttask.reporetriever.proxy.dto.BranchDto;
-import com.recruitmenttask.reporetriever.proxy.dto.GitHubRepositoryDto;
+import com.recruitmenttask.repositoryprovider.model.Branch;
+import com.recruitmenttask.repositoryprovider.model.GitHubRepository;
+import com.recruitmenttask.repositoryprovider.proxy.dto.BranchDto;
+import com.recruitmenttask.repositoryprovider.proxy.dto.GitHubRepositoryDto;
 
 import java.util.List;
 

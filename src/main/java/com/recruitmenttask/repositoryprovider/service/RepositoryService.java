@@ -1,22 +1,36 @@
-package com.recruitmenttask.reporetriever.service;
+package com.recruitmenttask.repositoryprovider.service;
 
-import com.recruitmenttask.reporetriever.model.AllInfoResult;
-import com.recruitmenttask.reporetriever.model.Branch;
-import com.recruitmenttask.reporetriever.model.GitHubRepository;
-import com.recruitmenttask.reporetriever.proxy.dto.BranchDto;
-import com.recruitmenttask.reporetriever.proxy.dto.GitHubRepositoryDto;
+import com.recruitmenttask.error.GitHubUserNotFoundException;
+import com.recruitmenttask.repositoryprovider.model.AllInfoResult;
+import com.recruitmenttask.repositoryprovider.model.Branch;
+import com.recruitmenttask.repositoryprovider.model.GitHubRepository;
+import com.recruitmenttask.repositoryprovider.proxy.GitHubApiProxy;
+import com.recruitmenttask.repositoryprovider.proxy.dto.BranchDto;
+import com.recruitmenttask.repositoryprovider.proxy.dto.GitHubRepositoryDto;
+import feign.FeignException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class RepositoryRetrieverFacade {
-    private final RepositoryRetriever repositoryRetrieverImpl;
+class RepositoryService {
+    private final GitHubApiProxy gitHubApiProxy;
 
-    public List<AllInfoResult> getAllInfoResult(String userName) {
-        List<GitHubRepository> results = getMappedRepositories(userName);
-        return createAllInfoResult(results);
+
+    List<GitHubRepositoryDto> makeGetRepositoryRequest(String username) {
+        try {
+            return gitHubApiProxy.getAllRepos(username);
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                throw new GitHubUserNotFoundException("User: " + username + " does not exist");
+            }
+            throw e;
+        }
+    }
+
+    List<BranchDto> makeBranchesRequest(String owner, String repoName) {
+        return gitHubApiProxy.getAllBranches(owner, repoName);
     }
 
     List<AllInfoResult> createAllInfoResult(List<GitHubRepository> results) {
@@ -36,7 +50,7 @@ public class RepositoryRetrieverFacade {
     }
 
     List<BranchDto> getAllBranchesDto(GitHubRepository repository) {
-        return repositoryRetrieverImpl.makeBranchesRequest(
+        return makeBranchesRequest(
                 repository.owner(),
                 repository.name()
         );
@@ -48,13 +62,13 @@ public class RepositoryRetrieverFacade {
     }
 
     List<GitHubRepositoryDto> getFilteredRepositories(String username) {
-        return repositoryRetrieverImpl.makeGetRepositoryRequest(username).stream()
+        return makeGetRepositoryRequest(username).stream()
                 .filter(gitHubRepositoryDto -> !gitHubRepositoryDto.fork())
                 .collect(Collectors.toList()
                 );
     }
 
-    RepositoryRetrieverFacade(final RepositoryRetriever repositoryRetrieverImpl) {
-        this.repositoryRetrieverImpl = repositoryRetrieverImpl;
+    RepositoryService(final GitHubApiProxy gitHubApiProxy) {
+        this.gitHubApiProxy = gitHubApiProxy;
     }
 }

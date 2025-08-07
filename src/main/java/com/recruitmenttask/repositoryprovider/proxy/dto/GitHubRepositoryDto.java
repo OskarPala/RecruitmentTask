@@ -1,4 +1,4 @@
-package com.recruitmenttask.reporetriever.proxy.dto;
+package com.recruitmenttask.repositoryprovider.proxy.dto;
 
 public record GitHubRepositoryDto(String name, OwnerDto owner, boolean fork) {
 }
