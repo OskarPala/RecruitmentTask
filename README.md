@@ -77,12 +77,12 @@ GET /{username}
 
 ## Technologies
 
-![Java](https://img.shields.io/badge/Java-21-blue)
+![Java](https://img.shields.io/badge/Java-21-yellow)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-brightgreen)
-![Spring Cloud OpenFeign](https://img.shields.io/badge/OpenFeign-Enabled-blueviolet)
-![WireMock](https://img.shields.io/badge/WireMock-2.35.0-yellow)
+![Spring Cloud OpenFeign](https://img.shields.io/badge/OpenFeign-Enabled-brightgreen)
+![WireMock](https://img.shields.io/badge/WireMock-2.35.0-royalblue)
 ![JUnit 5](https://img.shields.io/badge/JUnit_5-Test-red)
-![Maven](https://img.shields.io/badge/Maven-Build-orange)
+![Maven](https://img.shields.io/badge/Maven-Build-blue)
 
 ---
 
