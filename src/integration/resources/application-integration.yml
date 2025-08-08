@@ -1,6 +1,0 @@
-spring:
-  cloud:
-    openfeign:
-      client:
-        config:
-          github-api-client:
